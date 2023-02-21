@@ -94,7 +94,7 @@ def create_exl(id):
 
     # Save the changes to the Excel file
     wb.save('data.xlsx')
-
+    return publication_info
 
 def search(request):
     if request.method == 'GET':
@@ -102,6 +102,10 @@ def search(request):
 
     elif request.method == 'POST':
         query = request.POST['query']
-        create_exl(query)
-        return render(request, 'search_results.html', {'query': query})
+
+        info = create_exl(query)
+
+
+
+        return render(request, 'search_results.html', {'query': info})
 
