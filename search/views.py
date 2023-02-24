@@ -14,11 +14,12 @@ def get_publication_info(url):
             title = entry.get("dc:title")
             creator = entry.get("dc:creator")
             publicationName = entry.get("prism:publicationName")
-
-            affil_name = entry["affiliation"][0]["affilname"]
-            affiliation_city = entry["affiliation"][0]["affiliation-city"]
-            affiliation_country = entry["affiliation"][0]["affiliation-country"]
-
+            try:
+                affil_name = entry["affiliation"][0]["affilname"]
+                affiliation_city = entry["affiliation"][0]["affiliation-city"]
+                affiliation_country = entry["affiliation"][0]["affiliation-country"]
+            except Exception as e:
+                pass
             articles_info = {
                 "title": title,
                 "creator": creator,
@@ -35,7 +36,16 @@ def get_publication_info(url):
     return publications_info
 
 
-def create_exl(id):
+def create_exl(lastname, firstname):
+
+    author_search_url = f"https://api.elsevier.com/content/search/author?query=AUTHLASTNAME(%22{lastname}%22)%20AND%20AUTHFIRST(%22{firstname}%22)&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
+
+    response = requests.get(author_search_url)
+    if response.status_code == 200:
+        data = response.json()
+        id = data.get("search-results").get("entry")[0].get("dc:identifier")
+        id = id.replace('AUTHOR_ID:','')
+
     # AUID = int(input())
     # url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID({AUID})&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
     url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID({id})&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
@@ -101,9 +111,10 @@ def search(request):
         return render(request, 'search.html', {})
 
     elif request.method == 'POST':
-        query = request.POST['query']
+        lastname = request.POST['query']
+        firstname = request.POST['another_query']
 
-        info = create_exl(query)
+        info = create_exl(lastname, firstname)
 
 
 
