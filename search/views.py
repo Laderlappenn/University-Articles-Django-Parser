@@ -74,11 +74,21 @@ def create_exl(lastname, firstname):
     sheet['A1'] = 'Название статьи'
     for i in range(len(publication_info)):
         sheet[f'A{i + 2}'] = publication_info[i].get("title")
-    sheet['B1'] = 'Название журнала, номер, год выпуска'
-    sheet['C1'] = 'Скопус или веб оф сайнс'
-    sheet['D1'] = 'Рецензирумые зарубежные журналы (РИНЦ и другие через e-library - проверка)'
-    sheet['E1'] = 'Журналы, рекомендуемые КОКСНВО РК (список журналов)'
-    sheet['F1'] = 'Название сборников конференции международные/республиканские(название сборника, месяц, год )'
+    sheet['B1'] = 'Автор'
+    for i in range(len(publication_info)):
+        sheet[f'B{i + 2}'] = publication_info[i].get("creator")
+    sheet['C1'] = 'Журнал'
+    for i in range(len(publication_info)):
+        sheet[f'C{i + 2}'] = publication_info[i].get("publicationName")
+    sheet['D1'] = 'Университет'
+    for i in range(len(publication_info)):
+        sheet[f'C{i + 2}'] = publication_info[i].get("affil_name")
+    sheet['E1'] = 'Город'
+    for i in range(len(publication_info)):
+        sheet[f'C{i + 2}'] = publication_info[i].get("affiliation_city")
+    sheet['F1'] = 'Страна'
+    for i in range(len(publication_info)):
+        sheet[f'C{i + 2}'] = publication_info[i].get("affiliation_country")
     sheet['G1'] = 'Оттиск прикрепить'
     sheet['H1'] = 'Количество цитирование Скопус/ веб оф сайнс'
     sheet['I1'] = 'Тип автора'

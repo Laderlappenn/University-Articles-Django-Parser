@@ -1,7 +1,56 @@
-<form method="post">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style.css">
+    <title>Scopus Data</title>
+</head>
+<body>
+    <div class="cr__outer">
+        <div class="cr__inner">
+            <div class="cr">
+                Julian Zaharchenko
+            </div>
+            <div class="cr">
+                Kairbekov Adil
+            </div>
+            <div class="cr">
+                Alimbetov Daulet
+            </div>
+            <div class="cr">
+                Kairzhan Iliyas
+            </div>
+            <div class="cr">
+                Haviz Ablaykhan
+            </div>
+            <div class="cr">
+                Kakimov Nurbol
+            </div>
+            <div class="cr">
+                Zhumanalin Rahat
+            </div>
+        </div>
+    </div>
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <img class="logo" src="assets/img/logo.png" alt="logo">
+                <button class="cr-btn">
+                    Creators
+                </button>
+            </div>
+        </div>
+    </header>
+    <form class="form" method="post">
     {% csrf_token %}
-    <input type="text" name="query" placeholder="Search...">
-    <input type="text" name="another_query" placeholder="Enter another query...">
+    <input type="text" name="query" placeholder="Lastname">
+    <input type="text" name="another_query" placeholder="Firstname">
 
     <button type="submit">Search</button>
 </form>
+
+<script src="app.js"></script>
+</body>
+</html>
