@@ -3,6 +3,11 @@ from django.shortcuts import render
 import requests
 import openpyxl
 
+import os
+from django.http import FileResponse
+
+import mimetypes
+
 
 def get_publication_info(url):
     response = requests.get(url)
@@ -37,18 +42,18 @@ def get_publication_info(url):
 
 
 def create_exl(lastname, firstname):
-
     author_search_url = f"https://api.elsevier.com/content/search/author?query=AUTHLASTNAME(%22{lastname}%22)%20AND%20AUTHFIRST(%22{firstname}%22)&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
 
     response = requests.get(author_search_url)
     if response.status_code == 200:
         data = response.json()
         id = data.get("search-results").get("entry")[0].get("dc:identifier")
-        id = id.replace('AUTHOR_ID:','')
+        id = id.replace('AUTHOR_ID:', '')
 
     # AUID = int(input())
     # url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID({AUID})&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
-    url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID({id})&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
+    # url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID({id})&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
+    url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID(57209645760)&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
     publication_info = get_publication_info(url)
 
     for i in range(len(publication_info)):
@@ -82,13 +87,13 @@ def create_exl(lastname, firstname):
         sheet[f'C{i + 2}'] = publication_info[i].get("publicationName")
     sheet['D1'] = 'Университет'
     for i in range(len(publication_info)):
-        sheet[f'C{i + 2}'] = publication_info[i].get("affil_name")
+        sheet[f'D{i + 2}'] = publication_info[i].get("affil_name")
     sheet['E1'] = 'Город'
     for i in range(len(publication_info)):
-        sheet[f'C{i + 2}'] = publication_info[i].get("affiliation_city")
+        sheet[f'E{i + 2}'] = publication_info[i].get("affiliation_city")
     sheet['F1'] = 'Страна'
     for i in range(len(publication_info)):
-        sheet[f'C{i + 2}'] = publication_info[i].get("affiliation_country")
+        sheet[f'F{i + 2}'] = publication_info[i].get("affiliation_country")
     sheet['G1'] = 'Оттиск прикрепить'
     sheet['H1'] = 'Количество цитирование Скопус/ веб оф сайнс'
     sheet['I1'] = 'Тип автора'
@@ -113,8 +118,9 @@ def create_exl(lastname, firstname):
     sheet['B2'] = 'Чтение с вложеноого файла автоматический'
 
     # Save the changes to the Excel file
-    wb.save('data.xlsx')
+    wb.save('media/data.xlsx')
     return publication_info
+
 
 def search(request):
     if request.method == 'GET':
@@ -126,7 +132,20 @@ def search(request):
 
         info = create_exl(lastname, firstname)
 
-
-
         return render(request, 'search_results.html', {'query': info})
 
+
+def download_xls(request):
+    # Set the path to the XLSX file on disk
+    filepath = 'media/data.xlsx'
+
+    # Determine the MIME type based on the file extension
+    mimetype, _ = mimetypes.guess_type(filepath)
+
+    # Set the Content-Type header to the MIME type
+    response = FileResponse(open(filepath, 'rb'), content_type=mimetype)
+
+    # Set the Content-Disposition header to force download
+    response['Content-Disposition'] = 'attachment; filename="%s"' % os.path.basename(filepath)
+
+    return response
