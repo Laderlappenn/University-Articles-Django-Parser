@@ -52,8 +52,8 @@ def create_exl(lastname, firstname):
 
     # AUID = int(input())
     # url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID({AUID})&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
-    # url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID({id})&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
-    url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID(57209645760)&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
+    url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID({id})&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
+    # url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID(57209645760)&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
     publication_info = get_publication_info(url)
 
     for i in range(len(publication_info)):
