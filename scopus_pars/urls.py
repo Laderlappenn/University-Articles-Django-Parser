@@ -19,4 +19,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('search/', include(('search.urls', 'searches'), namespace='search')),
+    path('acts/', include(('acts.urls', 'acts'), namespace='acts')),
+    path('accounts/', include(('accounts.urls', 'accounts'),  namespace='accounts')),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]

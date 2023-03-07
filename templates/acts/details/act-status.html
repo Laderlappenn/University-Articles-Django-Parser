@@ -1,0 +1,62 @@
+<div id="body">
+
+<table>
+    <thead>
+      <tr>
+        <th>User name</th>
+        <th>Title</th>
+        <th>Adress</th>
+        <th>Act type</th>
+        <th>Date created</th>
+        <th>Date updated</th>
+        <th>Url</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj in page_obj %}
+      <tr>
+        <td>{{obj.user}}</td>
+        <td>{{obj.title}}</td>
+        <td>{{obj.adress}}</td>
+        <td>{{obj.act_type}}</td>
+        <td>{{obj.date_created}}</td>
+        <td>{{obj.date_updated}}</td>      
+        <td><a href="http://127.0.0.1:8000/acts/{{obj.id}}">Смотреть заявку</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% if page_obj.has_previous %}
+<button hx-get="status/?status={{ status }}&page=1" 
+        hx-target="#body"
+        hx-swap="outerHTML">
+        &laquo First
+</button>
+<button hx-get="status/?status={{ status }}&page={{ page_obj.previous_page_number }}" 
+        hx-target="#body"
+        hx-swap="outerHTML">
+        Previous
+</button>
+{% endif %}
+
+Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+{% if page_obj.has_next %}
+<!-- <a href="status/?status={{ status }}&page={{ page_obj.next_page_number }}">next</a> -->
+<button hx-get="status/?status={{ status }}&page={{ page_obj.next_page_number }}" 
+        hx-target="#body"
+        hx-swap="outerHTML">
+        next 
+</button>
+
+<!-- <a href="status/?status={{ status }}&page={{ page_obj.paginator.num_pages }}">Last &raquo;</a> -->
+<button hx-get="status/?status={{ status }}&page={{ page_obj.paginator.num_pages }}" 
+        hx-target="#body"
+        hx-swap="outerHTML">
+        Last &raquo;
+</button>
+{% endif %}
+
+</div>
+
