@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Первая таблица</title>
+</head>
+<body>
+
+
+<div id="body">
+
+<table id="acts">
+  <thead>
+    <tr>
+      <th>User name</th>
+      <th>Title</th>
+      <th>Adress</th>
+      <th>Act type</th>
+      <th>Date created</th>
+      <th>Date updated</th>
+      <th>Url</th>
+      {% if request.user.type == 'DISPATCHER' %}
+      <th>Accept</th>
+      {% else %}
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for obj in page_obj %}
+    <tr>
+      <td>{{obj.user}}</td>
+      <td>{{obj.title}}</td>
+      <td>{{obj.adress}}</td>
+      <td>{{obj.act_type}}</td>
+      <td>{{obj.date_created}}</td>
+      <td>{{obj.date_updated}}</td>
+      <td><a href="http://127.0.0.1:8000/acts/{{obj.id}}">Смотреть таблицу</a></td>
+      <td>
+       </td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+  <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+
+</table>
+
+
+
+{% if page_obj.has_previous %}
+<a href="?page=1">&laquo First</a>
+<a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+{% endif %}
+
+Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}">next</a>
+<a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+{% endif %}
+
+
+
+
+
+  </body>
+
+
+</body>
+</html>

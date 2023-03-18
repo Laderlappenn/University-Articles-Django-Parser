@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% extends '../base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+</head>
+<body>
+{% block content %}
+
+ <a href="{% url 'acts:tables' %}">Все таблицы</a>
+ <button hx-get="first" hx-target="#body" hx-swap="outerHTML">Первая таблица</button>
+ <button hx-get="second" hx-target="#body" hx-swap="outerHTML">Вторая таблица</button>
+
+
+<div id="body">
+
+<table>
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>User name</th>
+        <th>Title</th>
+        <th>Adress</th>
+        <th>Act type</th>
+        <th>Act text</th>
+        <th>Date created</th>
+        <th>Date updated</th>
+         <th>Act processing</th>
+         <th>Do untill</th>
+      </tr>
+    </thead>
+    <tbody>
+     {% for obj in page_obj %}
+    <tr>
+      <td> {{ forloop.counter }}</td>
+      <td>{{obj.user}}</td>
+      <td>{{obj.title}}</td>
+      <td>{{obj.adress}}</td>
+      <td>{{obj.act_type}}</td>
+      <td>{{obj.date_created}}</td>
+      <td>{{obj.date_updated}}</td>
+      <td><a href="http://127.0.0.1:8000/acts/{{obj.id}}">Смотреть заявку</a></td>
+      <td>
+       </td>
+
+    </tr>
+    {% endfor %}
+
+    </tbody>
+  </table>
+
+</div>
+ <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+{% endblock %}
+</body>
+</html>

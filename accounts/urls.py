@@ -7,4 +7,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.BBLoginView.as_view(), name='login'),
     path('logout/', views.BBLogoutView.as_view(), name='logout'),
+    path('users/', views.users, name='users'),
 ]

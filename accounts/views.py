@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .models import Account
 from django.shortcuts import get_object_or_404
-
+from django.core.paginator import Paginator
 
 @login_required
 def profile(request):
@@ -41,3 +41,14 @@ class BBLoginView(LoginView):
 
 class BBLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'accounts/logout.html'
+
+
+
+@login_required
+def users(request):
+    if request.user.type == 'DISPATCHER':
+        queryset = Account.objects.all().order_by('username')
+        paginator = Paginator(queryset, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        return render(request, 'accounts/users.html', {"page_obj": page_obj})

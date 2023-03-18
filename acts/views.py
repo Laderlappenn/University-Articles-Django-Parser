@@ -5,6 +5,58 @@ from django.http import QueryDict
 from .models import Act
 from .forms import ActForm, ActSetDateForm
 
+def tables(request):
+
+    return render(request, 'acts/tables.html', {})
+
+def tables_first(request):
+    if request.user.type == 'DISPATCHER':
+        queryset = Act.objects.select_related('user').all().order_by('-date_updated')
+    else:
+        queryset = Act.objects.select_related('user').filter(
+            user_id=request.user.id)  # request.session.get('_auth_user_id')
+    paginator = Paginator(queryset, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'acts/tables_first.html', {'page_obj': page_obj})
+
+def tables_second(request):
+    if request.user.type == 'DISPATCHER':
+        queryset = Act.objects.select_related('user').all().order_by('-date_updated')
+    else:
+        queryset = Act.objects.select_related('user').filter(
+            user_id=request.user.id)  # request.session.get('_auth_user_id')
+    paginator = Paginator(queryset, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'acts/tables_second.html', {'page_obj': page_obj})
+
+
+
+def table_first(request):
+
+    return render(request, 'acts/tables.html', {})
+
+
+def table_second(request):
+
+    return render(request, 'acts/tables.html', {})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @login_required
 def acts(request):
