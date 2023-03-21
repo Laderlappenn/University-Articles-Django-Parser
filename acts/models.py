@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from accounts.models import Account
 
 class Act(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -27,6 +28,19 @@ class Act(models.Model):
     class Meta:
         ordering = ['date_updated']
         # indexes = [models.Index(fields=['fieldname1', 'fieldname1']), ]
+
+
+    # # signals did it
+    # @property
+    # def change_on_update(self):
+    #     if self.pk:
+    #         old_date_updated = Act.objects.get(pk=self.pk).date_updated
+    #         if old_date_updated != self.date_updated:
+    #             # do something here
+    #             user_id = Act.objects.get(pk=self.pk).user_id
+    #             profile = Account.objects.get(pk=user_id)
+    #             profile.date_updated = timezone.now()
+    #             profile.save()
 
     def __str__(self):
         return self.title

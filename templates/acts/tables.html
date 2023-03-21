@@ -9,9 +9,13 @@
 <body>
 {% block content %}
 
+Профиль пользователя: {{username}}
+<br>
+<br>
+
  <a href="{% url 'acts:tables' %}">Все таблицы</a>
- <button hx-get="first" hx-target="#body" hx-swap="outerHTML">Первая таблица</button>
- <button hx-get="second" hx-target="#body" hx-swap="outerHTML">Вторая таблица</button>
+ <button hx-get="{% url 'acts:tables_first' pkey=pkey %}" hx-target="#body" hx-swap="outerHTML">Первая таблица</button>
+ <button hx-get="{% url 'acts:tables_second' pkey=pkey %}" hx-target="#body" hx-swap="outerHTML">Вторая таблица</button>
 
 
 <div id="body">

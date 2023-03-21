@@ -78,6 +78,7 @@
       <th>last_login</th>
       <th>is_staff</th>
       <th>type</th>
+      <th>last update</th>
       <th>Url</th>
     </tr>
   </thead>
@@ -90,7 +91,8 @@
       <td>{{obj.last_login}}</td>
       <td>{{obj.is_staff}}</td>
       <td>{{obj.type}}</td>
-      <td><a href="#">Редактировать профиль</a></td>
+      <td>{{obj.date_updated}}</td>
+      <td><a href="{% url 'accounts:user' pkey=obj.id %}">Открыть работы</a></td>
     </tr>
     {% endfor %}
   </tbody>

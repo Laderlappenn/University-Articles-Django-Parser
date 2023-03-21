@@ -9,23 +9,17 @@ def tables(request):
 
     return render(request, 'acts/tables.html', {})
 
-def tables_first(request):
+def tables_first(request, pkey):
     if request.user.type == 'DISPATCHER':
-        queryset = Act.objects.select_related('user').all().order_by('-date_updated')
-    else:
-        queryset = Act.objects.select_related('user').filter(
-            user_id=request.user.id)  # request.session.get('_auth_user_id')
+        queryset = Act.objects.select_related('user').filter(user_id=pkey)
     paginator = Paginator(queryset, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'acts/tables_first.html', {'page_obj': page_obj})
 
-def tables_second(request):
+def tables_second(request, pkey):
     if request.user.type == 'DISPATCHER':
-        queryset = Act.objects.select_related('user').all().order_by('-date_updated')
-    else:
-        queryset = Act.objects.select_related('user').filter(
-            user_id=request.user.id)  # request.session.get('_auth_user_id')
+        queryset = Act.objects.select_related('user').filter(user_id=pkey)
     paginator = Paginator(queryset, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

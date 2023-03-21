@@ -11,8 +11,8 @@ urlpatterns = [
 
 
     path('tables/', views.tables, name='tables'),
-    path('tables/first', views.tables_first, name='tables_first'),
-    path('tables/second', views.tables_second, name='tables_second'),
+    path('tables/first/<int:pkey>/', views.tables_first, name='tables_first'),
+    path('tables/second/<int:pkey>/', views.tables_second, name='tables_second'),
     path('tables/first/table', views.tables, name='table_first'),
     path('tables/first/table', views.tables, name='table_second'),
 

@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Account
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
+from acts.models import Act
 
 @login_required
 def profile(request):
@@ -47,8 +48,19 @@ class BBLogoutView(LoginRequiredMixin, LogoutView):
 @login_required
 def users(request):
     if request.user.type == 'DISPATCHER':
-        queryset = Account.objects.all().order_by('username')
+        queryset = Account.objects.all().order_by('-date_updated')
         paginator = Paginator(queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         return render(request, 'accounts/users.html', {"page_obj": page_obj})
+
+@login_required
+def user(request, pkey):
+    if request.user.type == 'DISPATCHER':
+        queryset = Act.objects.select_related('user').filter(user_id=pkey).order_by('date_updated')
+        profile = Account.objects.get(id=pkey)
+        username = profile.username
+        paginator = Paginator(queryset, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        return render(request, 'acts/tables.html', {"page_obj": page_obj, "pkey": pkey, "username": username})
