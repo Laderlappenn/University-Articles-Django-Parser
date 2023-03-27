@@ -8,36 +8,30 @@
 
 
 <div id="body">
-
+<a class="button" href="{% url 'acts:create_1' %}">Добавить</a>
 <table id="acts">
   <thead>
     <tr>
-      <th>User name</th>
-      <th>Title</th>
-      <th>Adress</th>
-      <th>Act type</th>
-      <th>Date created</th>
-      <th>Date updated</th>
-      <th>Url</th>
-      {% if request.user.type == 'DISPATCHER' %}
-      <th>Accept</th>
-      {% else %}
-      {% endif %}
+      <th>Название статьи</th>
+      <th>Соавторы</th>
+      <th>Тип автора</th>
+      <th>Количество авторов</th>
+      <th>Название журнала, номер, год выпуска </th>
+      <th>Процентиль  (1..100 по Scopus) или квартиль (Q1..Q4 по WoS)</th>
+      <th>URL статьи в базах Скопус или веб оф сайнс</th>
     </tr>
   </thead>
   <tbody>
     {% for obj in page_obj %}
     <tr>
-      <td>{{obj.user}}</td>
       <td>{{obj.title}}</td>
-      <td>{{obj.adress}}</td>
-      <td>{{obj.act_type}}</td>
-      <td>{{obj.date_created}}</td>
-      <td>{{obj.date_updated}}</td>
-      <td><a href="http://127.0.0.1:8000/acts/{{obj.id}}">Смотреть таблицу</a></td>
-      <td>
-       </td>
-
+      <td>{{obj.co_creators}}</td>
+      <td>{{obj.author_type}}</td>
+      <td>{{obj.number_of_authors}}</td>
+      <td>{{obj.journal_title}}</td>
+      <td>{{obj.percentile}}</td>
+      <td>{{obj.url}}</td>
+      <td>{{obj.file}}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -63,7 +57,7 @@ Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
 
 
 
-  </body>
+</div>
 
 
 </body>

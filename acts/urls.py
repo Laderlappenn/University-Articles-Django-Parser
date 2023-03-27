@@ -3,11 +3,24 @@ from . import views, views_htmx
 
 urlpatterns = [
     path('', views.acts, name='acts'),
-    path('create/', views.create_act, name='create_act'),
+    path('1/', views.tables_1, name='tables_1'),
+    path('2/', views.tables_2, name='tables_2'),
+    path('3/', views.tables_3, name='tables_3'),
+    path('4/', views.tables_4, name='tables_4'),
+    path('5/', views.tables_5, name='tables_5'),
+    path('6/', views.tables_6, name='tables_6'),
+
+
+    path('create/1', views.create_1, name='create_1'),
+    path('create/2', views.create_2, name='create_2'),
+    path('create/3', views.create_3, name='create_3'),
+    path('create/4', views.create_4, name='create_4'),
+    path('create/5', views.create_5, name='create_5'),
+    path('create/6', views.create_6, name='create_6'),
+
     path('<int:pkey>/', views.act, name='act'),
     path('search', views.act_search),  # POST
     path('search/', views.act_search),  # GET
-    path('<int:pkey>/date/', views.set_date, name='set-date'),
 
 
     path('tables/', views.tables, name='tables'),

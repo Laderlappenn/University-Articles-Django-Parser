@@ -10,7 +10,7 @@
 <body>
     {% block content %}
 {{message}}
-    <form method="post" action="{% url 'acts:create_1' %}" enctype="multipart/form-data">
+    <form method="post" action="{% url 'acts:create_4' %}" enctype="multipart/form-data">
         {% csrf_token %}
     
         {{form.as_ul}}

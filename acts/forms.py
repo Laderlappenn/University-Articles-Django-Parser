@@ -1,33 +1,81 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Act
+from .models import Table_1, Table_2, Table_3, Table_4, Table_5, Table_6
 
-class ActForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['title'].widget.attrs.update({'class': 'special'})
-        self.fields['adress'].widget.attrs.update({'class': 'special'})
-        self.fields['act_type'].widget.attrs.update({'class': 'special'})
-        self.fields['text'].widget.attrs.update({'class': 'special'})
-        self.fields['image'].widget.attrs.update({'class': 'special'})
 
-    image = forms.ImageField(required = False)
-    file = forms.FileField(required = False)
+class Table_1_form(ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['title'].widget.attrs.update({'class': 'special'})
+
+    file = forms.FileField(required=False)
 
     class Meta:
-        model = Act
+        model = Table_1
         fields = '__all__'
-        exclude = ('act_processing', 'do_until', 'user', 'executer')
+        exclude = ('act_processing', 'user', 'executer')
 
 
-class ActSetDateForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['do_until'].widget.attrs.update({'class': 'special'})
+class Table_2_form(ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['title'].widget.attrs.update({'class': 'special'})
+
+    file = forms.FileField(required=False)
 
     class Meta:
-        model = Act
-        fields = ('do_until',)
-        widgets = {
-            'do_until': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-        }
+        model = Table_2
+        fields = '__all__'
+        exclude = ('user',)
+
+
+class Table_3_form(ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['title'].widget.attrs.update({'class': 'special'})
+
+    file = forms.FileField(required=False)
+
+    class Meta:
+        model = Table_3
+        fields = '__all__'
+        exclude = ('user',)
+
+
+class Table_4_form(ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['title'].widget.attrs.update({'class': 'special'})
+
+    file = forms.FileField(required=False)
+
+    class Meta:
+        model = Table_4
+        fields = '__all__'
+        exclude = ('user',)
+
+
+class Table_5_form(ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['title'].widget.attrs.update({'class': 'special'})
+
+    file = forms.FileField(required=False)
+
+    class Meta:
+        model = Table_5
+        fields = '__all__'
+        exclude = ('user',)
+
+
+class Table_6_form(ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['title'].widget.attrs.update({'class': 'special'})
+
+    file = forms.FileField(required=False)
+
+    class Meta:
+        model = Table_6
+        fields = '__all__'
+        exclude = ('user',)

@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Account
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
-from acts.models import Act
+from acts.models import Table_1
 
 @login_required
 def profile(request):
@@ -57,7 +57,7 @@ def users(request):
 @login_required
 def user(request, pkey):
     if request.user.type == 'DISPATCHER':
-        queryset = Act.objects.select_related('user').filter(user_id=pkey).order_by('date_updated')
+        queryset = Table_1.objects.select_related('user').filter(user_id=pkey).order_by('date_updated')
         profile = Account.objects.get(id=pkey)
         username = profile.username
         paginator = Paginator(queryset, 10)
