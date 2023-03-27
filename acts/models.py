@@ -15,7 +15,7 @@ class Table_1(models.Model):
     number_of_authors = models.CharField(max_length=100, verbose_name="Количество авторов")
     journal_title = models.CharField(max_length=100, verbose_name="Название журнала, номер, год выпуска ")
     percentile = models.CharField(max_length=100, verbose_name="Процентиль  (1..100 по Scopus) или квартиль (Q1..Q4 по WoS)")
-    url = models.CharField(max_length=100, verbose_name="URL статьи в базах Скопус или веб оф сайнс")
+    url = models.CharField(max_length=100, verbose_name="DOI статьи")
     file = models.FileField(null=True, blank=True, upload_to='files/act_files', verbose_name ="Оттиск прикрепить")
 
     class Meta:
