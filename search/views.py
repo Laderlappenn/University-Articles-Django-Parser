@@ -8,6 +8,8 @@ from django.http import FileResponse
 
 import mimetypes
 
+from acts.forms import Table_1_form
+
 
 def get_publication_info(url):
     response = requests.get(url)
@@ -41,14 +43,14 @@ def get_publication_info(url):
     return publications_info
 
 
-def create_exl(lastname, firstname):
-    author_search_url = f"https://api.elsevier.com/content/search/author?query=AUTHLASTNAME(%22{lastname}%22)%20AND%20AUTHFIRST(%22{firstname}%22)&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
-
-    response = requests.get(author_search_url)
-    if response.status_code == 200:
-        data = response.json()
-        id = data.get("search-results").get("entry")[0].get("dc:identifier")
-        id = id.replace('AUTHOR_ID:', '')
+def create_exl(lastname, firstname, id):
+    # author_search_url = f"https://api.elsevier.com/content/search/author?query=AUTHLASTNAME(%22{lastname}%22)%20AND%20AUTHFIRST(%22{firstname}%22)&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
+    #
+    # response = requests.get(author_search_url)
+    # if response.status_code == 200:
+    #     data = response.json()
+    #     id = data.get("search-results").get("entry")[0].get("dc:identifier")
+    #     id = id.replace('AUTHOR_ID:', '')
 
     # AUID = int(input())
     # url = f"https://api.elsevier.com/content/search/scopus?query=AU-ID({AUID})&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
@@ -129,10 +131,23 @@ def search(request):
     elif request.method == 'POST':
         lastname = request.POST['query']
         firstname = request.POST['another_query']
+        id = request.POST['query']
 
-        info = create_exl(lastname, firstname)
+        info = create_exl(lastname, firstname, id)
 
         return render(request, 'search_results.html', {'query': info})
+
+def search_new(request):
+    if request.method == 'POST':
+        lastname = request.POST['query']
+        firstname = request.POST['another_query']
+        id = request.POST['query']
+
+        info = create_exl(lastname, firstname, id)
+
+        form = Table_1_form(initial = {'title': info[0].get("title"), 'journal_title': info[0].get("publicationName"),})
+
+        return render(request, 'search_results_new.html', {'form': form})
 
 
 def download_xls(request):

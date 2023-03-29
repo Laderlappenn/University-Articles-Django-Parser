@@ -15,6 +15,12 @@ class Table_1_form(ModelForm):
         fields = '__all__'
         exclude = ('act_processing', 'user', 'executer')
 
+    def __init__(self, *args, **kwargs):
+        custom_info = kwargs.pop('custom_info', None)  # get the custom info from the kwargs
+        super().__init__(*args, **kwargs)
+        if custom_info:
+            self.fields['custom_field'].initial = custom_info.get('custom_field',
+                                                                  '')  # set the initial value for the custom field
 
 class Table_2_form(ModelForm):
     # def __init__(self, *args, **kwargs):

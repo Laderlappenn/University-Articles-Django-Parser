@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Act</title>
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
 </head>
 <body>
     {% block content %}
 {{message}}
-    <form method="post" action="{% url 'acts:create_1' %}" enctype="multipart/form-data">
+    <form id="data" method="post" action="{% url 'acts:create_1' %}" enctype="multipart/form-data">
         {% csrf_token %}
     
         {{form.as_ul}}
@@ -19,6 +20,20 @@
         <input type="hidden" name="next" value="{{ next }}" />
 
     </form>
+
+
+<br>
+<br>
+
+    Имя, Фамилия
+    <form hx-post="{% url 'search:search_new' %}" hx-target="#data" hx-swap="outerHTML">
+    {% csrf_token %}
+    <input type="text" name="query" placeholder="Lastname">
+    <input type="text" name="another_query" placeholder="Firstname">
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+
+    <button type="submit">Search</button>
+</form>
 
     {% endblock %}
 </body>
