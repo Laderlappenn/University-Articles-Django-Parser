@@ -7,10 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Act</title>
     <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+
 </head>
 <body>
     {% block content %}
 {{message}}
+
+
     <form id="data" method="post" action="{% url 'acts:create_1' %}" enctype="multipart/form-data">
         {% csrf_token %}
     
@@ -21,20 +24,23 @@
 
     </form>
 
+ <div id="articles">
 
-<br>
-<br>
-
-    Имя, Фамилия
-    <form hx-post="{% url 'search:search_new' %}" hx-target="#data" hx-swap="outerHTML">
-    {% csrf_token %}
-    <input type="text" name="query" placeholder="Lastname">
-    <input type="text" name="another_query" placeholder="Firstname">
+ </div>
     <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+
+<br>
+<br>
+
+    scopus id
+    <form hx-post="{% url 'search:search_articles' %}" hx-target="#articles" hx-swap="outerHTML">
+    {% csrf_token %}
+    <input type="text" name="query" placeholder="ID">
+
 
     <button type="submit">Search</button>
 </form>
-
+<script src="https://unpkg.com/htmx.org@1.6.1"></script>
     {% endblock %}
 </body>
 </html>

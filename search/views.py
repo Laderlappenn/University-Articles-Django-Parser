@@ -21,6 +21,7 @@ def get_publication_info(url):
             title = entry.get("dc:title")
             creator = entry.get("dc:creator")
             publicationName = entry.get("prism:publicationName")
+            doi = entry.get("prism:doi")
             try:
                 affil_name = entry["affiliation"][0]["affilname"]
                 affiliation_city = entry["affiliation"][0]["affiliation-city"]
@@ -33,7 +34,8 @@ def get_publication_info(url):
                 "publicationName": publicationName,
                 "affil_name": affil_name,
                 "affiliation_city": affiliation_city,
-                "affiliation_country": affiliation_country
+                "affiliation_country": affiliation_country,
+                "doi": doi
             }
 
             publications_info.append(articles_info)
@@ -43,7 +45,7 @@ def get_publication_info(url):
     return publications_info
 
 
-def create_exl(lastname, firstname, id):
+def create_exl(id):
     # author_search_url = f"https://api.elsevier.com/content/search/author?query=AUTHLASTNAME(%22{lastname}%22)%20AND%20AUTHFIRST(%22{firstname}%22)&apiKey=f0097b56b4ed057a6d01f4a20620c3d0"
     #
     # response = requests.get(author_search_url)
@@ -129,25 +131,34 @@ def search(request):
         return render(request, 'search.html', {})
 
     elif request.method == 'POST':
-        lastname = request.POST['query']
-        firstname = request.POST['another_query']
         id = request.POST['query']
 
-        info = create_exl(lastname, firstname, id)
+        info = create_exl(id)
 
         return render(request, 'search_results.html', {'query': info})
 
-def search_new(request):
+
+def search_new(request, id, num):
     if request.method == 'POST':
-        lastname = request.POST['query']
-        firstname = request.POST['another_query']
+
+
+        info = create_exl(id)
+
+        form = Table_1_form(initial={'title': info[num-1].get("title"), 'journal_title': info[num-1].get("publicationName"),
+                                     'url': info[num-1].get("doi"), 'author_first': info[num-1].get("creator")})
+
+        return render(request, 'search_results_articles.html', {'form': form})
+
+
+def search_articles(request):
+    if request.method == 'POST':
         id = request.POST['query']
 
-        info = create_exl(lastname, firstname, id)
+        info = create_exl(id)
 
-        form = Table_1_form(initial = {'title': info[0].get("title"), 'journal_title': info[0].get("publicationName"),})
+        result_len = len(info)
 
-        return render(request, 'search_results_new.html', {'form': form})
+        return render(request, 'search_results_new.html', {'id': id, 'page_obj': info})
 
 
 def download_xls(request):

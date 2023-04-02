@@ -11,7 +11,7 @@ class Table_1(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=100, verbose_name="Название статьи")
     co_creators = models.CharField(max_length=100, verbose_name="Соавторы")
-    author_type = models.CharField(max_length=100, verbose_name="Тип автора")
+    author_first = models.CharField(max_length=100, verbose_name="Первый автор")
     number_of_authors = models.CharField(max_length=100, verbose_name="Количество авторов")
     journal_title = models.CharField(max_length=100, verbose_name="Название журнала, номер, год выпуска ")
     percentile = models.CharField(max_length=100, verbose_name="Процентиль  (1..100 по Scopus) или квартиль (Q1..Q4 по WoS)")

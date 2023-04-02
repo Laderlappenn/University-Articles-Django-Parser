@@ -1,0 +1,10 @@
+
+<form id="data" method="post" action="{% url 'acts:create_1' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{form.as_ul}}
+
+        <input class="btn btn-primary" type="submit"/>
+        <input type="hidden" name="next" value="{{ next }}" />
+
+    </form>

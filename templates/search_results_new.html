@@ -1,9 +1,4 @@
-<form id="data" method="post" action="{% url 'acts:create_1' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        {{form.as_ul}}
-
-        <input class="btn btn-primary" type="submit"/>
-        <input type="hidden" name="next" value="{{ next }}" />
-
-    </form>
+{% for obj in page_obj %}
+<button hx-post="{% url 'search:search_new' num=forloop.counter id=id %}" hx-target="#data" hx-swap="outerHTML" hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'>{{obj.title}}</button>
+<br>
+{% endfor %}
